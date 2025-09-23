@@ -1,0 +1,626 @@
+/* ========================================
+   PayisMakers — styles.css
+======================================== */
+
+/* Variables */
+:root {
+  --bg: #0c0d0f;
+  --surface: #14161a;
+  --muted: #777c86;
+  --text: #e9edf3;
+  --brand: #d9832c;
+  --brand-2: #d4542d;
+  --white: #ffffff;
+  --shadow: 0 10px 30px rgba(0, 0, 0, .25);
+  --radius: 18px;
+}
+
+/* Base */
+* {
+  box-sizing: border-box
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* ========================================
+   Utilities
+======================================== */
+.container {
+  width: min(1120px, 92%);
+  margin-inline: auto
+}
+
+.section {
+  padding: 72px 0
+}
+
+.section--alt {
+  background: var(--surface)
+}
+
+.section__title {
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  margin: 0 0 28px;
+  font-weight: 800;
+}
+
+/* Buttons */
+.btn {
+  display: inline-block;
+  padding: 14px 22px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: var(--bg);
+  font-weight: 700;
+  text-decoration: none;
+  box-shadow: var(--shadow);
+  transition: .2s transform;
+}
+
+.btn:hover {
+  transform: translateY(-2px)
+}
+
+.btn--ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid #2a2f36
+}
+
+.btn--light {
+  background: var(--white);
+  color: #0a0c0d
+}
+
+.btn--small {
+  padding: 10px 14px;
+  border-radius: 10px
+}
+
+/* ========================================
+   Header
+======================================== */
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: rgba(12, 13, 15, .7);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid #1f232a;
+}
+
+.nav__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 0
+}
+
+.brand {
+  font-weight: 800;
+  letter-spacing: .3px;
+  color: var(--text);
+  text-decoration: none;
+  font-size: 1.2rem;
+}
+
+.brand span {
+  color: var(--brand)
+}
+
+.brand--footer {
+  font-size: 1.4rem
+}
+
+.menu a {
+  color: var(--text);
+  text-decoration: none;
+  margin-left: 18px;
+  font-weight: 600;
+}
+
+.menu a:hover {
+  color: var(--brand)
+}
+
+/* ========================================
+   Hero Carousel
+======================================== */
+.hero-carousel {
+  position: relative;
+  width: 92%;              /* deja aire a los lados */
+  max-width: 1580px;       /* límite opcional en pantallas grandes */
+  height: 100vh;            /* un poco más compacto que fullscreen */
+  max-height: 777px;       /* control en pantallas grandes */
+  margin: 40px auto;       /* centra y separa arriba/abajo */
+  overflow: hidden;
+  border-radius: 24px;     /* bordes redondeados */
+  box-shadow: 0 12px 40px rgba(0,0,0,.45);
+}
+
+.carousel {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.slide {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  transition: opacity .6s ease;
+  width: 100%;
+  height: 100%;
+}
+
+.slide.active {
+  opacity: 1;
+  position: relative;
+}
+
+/* Video */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  background: #000;
+}
+
+.hero__video iframe {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  min-width: 100%;
+  min-height: 100%;
+  width: 177.78vh;
+  /* relación 16:9 */
+  height: 100vh;
+  pointer-events: none;
+  object-fit: cover;
+}
+
+/* Images */
+.slide img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  position: absolute;
+  inset: 0;
+}
+
+/* Overlay */
+.hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(rgba(10, 10, 10, .35), rgba(10, 10, 10, .55));
+}
+
+/* Content */
+.hero__content {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  color: #fff;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 0 20px;
+}
+
+.hero__content h1 {
+  font-size: clamp(1.8rem, 3.6vw, 3.2rem);
+  line-height: 1.2;
+  margin: 0 0 14px;
+}
+
+.hero__content h1 span {
+  color: var(--brand)
+}
+
+.hero__cta {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+
+/* Badges */
+.hero__badges {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin: 18px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.hero__badges li {
+  border: 1px solid #2a2f36;
+  padding: 8px 12px;
+  border-radius: 999px;
+  color: #c9d1da;
+  font-size: .9rem;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* Controls */
+/* Contenedor de los dots con estilo de cápsula */
+.carousel-controls {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 12px;
+  z-index: 3;
+
+  background: #0c0d0f;         /* Fondo oscuro */
+  padding: 8px 16px;           /* Espaciado interno */
+  border-radius: 999px;        /* Bordes bien redondeados */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.5); /* Sombrilla sutil */
+}
+
+/* Bolitas por defecto */
+.carousel-controls .dot {
+  width: 12px;
+  height: 12px;
+  background: #ddd;
+  border-radius: 50%;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+/* Dot activo = pastilla */
+.carousel-controls .dot.active {
+  width: 36px;
+  border-radius: 999px;
+  background: #ddd;
+}
+
+/* Barra de progreso dentro del activo */
+.carousel-controls .dot .progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background: var(--brand);
+  border-radius: 999px;
+  transform: scaleX(0);
+  transform-origin: left;
+}
+
+/* ========================================
+   Section Titles con animación mejorada
+======================================== */
+/* Estado inicial: oculto y desplazado */
+.section__title {
+  font-family: 'Montserrat', sans-serif; /* tipografía más fuerte para títulos */
+  font-size: clamp(1.6rem, 2.2vw, 2.2rem);
+  font-weight: 800;
+  margin: 0 0 42px;      /* más separación con lo de abajo */
+  opacity: 0;
+  transform: translateY(40px);  /* más recorrido */
+  transition: all 1s ease-out;  /* más perceptible */
+}
+
+/* Estado visible cuando entra en viewport */
+.section__title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ========================================
+   CARDS — 2x2 fijo, expansión direccional
+======================================== */
+.cards {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  gap: 22px;
+  overflow: visible;             /* deja que la card crecida salga del grid */
+  position: relative;
+}
+
+/* Card base */
+.cards .card {
+  position: relative;
+  background: #0f1114;
+  border: 1px solid #20242b;
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  cursor: pointer;
+  isolation: isolate;
+  transform: translateZ(0) scale(1);
+  will-change: transform;
+  transition:
+    transform .45s cubic-bezier(.2,.7,.2,1),
+    box-shadow .35s ease,
+    opacity .3s ease,
+    filter .3s ease;
+}
+
+/* Glow sutil */
+.cards .card::after {
+  content: "";
+  position: absolute; inset: -1px;
+  border-radius: 18px;
+  pointer-events: none;
+  background: radial-gradient(120% 120% at 50% -10%, rgba(217,131,44,.28), transparent 50%);
+  opacity: 0;
+  transition: opacity .35s ease;
+}
+
+/* Media */
+.card__media { 
+  aspect-ratio: 16/10; 
+  overflow: hidden; 
+  border-bottom: 1px solid #20242b; 
+}
+.card__media img { 
+  width: 100%; 
+  height: 100%; 
+  object-fit: cover; 
+  transition: transform .6s ease; 
+}
+
+/* Body */
+.card__body { padding: 16px; display: grid; gap: 8px; }
+.card__body h3 { margin: 0 0 6px; font-size: 1.05rem; }
+.card__body p { color: #b9c2cc; margin: 0; }
+
+/* Extra content, chips y botones (colapsados al inicio) */
+.card__extra,
+.chips,
+.cta-row {
+  opacity: 0;
+  max-height: 0;
+  overflow: hidden;
+  transition: 
+    opacity .35s ease,
+    max-height .45s ease;
+}
+
+/* Chips */
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 8px; }
+.chip {
+  padding: 6px 10px; border-radius: 999px;
+  border: 1px solid #26303a; color: #c9d1da; font-size: .83rem;
+  background: rgba(255,255,255,.03);
+}
+
+/* CTA row */
+.card .cta-row { display: flex; margin-top: 10px; gap: 10px; }
+
+/* Botón tiny coherente */
+.card .btn.btn--tiny {
+  padding: 8px 12px; border-radius: 10px; font-weight: 700;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2)); 
+  color: #0a0c0d;
+  text-decoration: none; box-shadow: var(--shadow);
+}
+
+/* ——— Interacción ——— */
+
+/* Apagar el resto al hover */
+@supports selector(:has(*)) {
+  .cards:has(.card:hover) .card:not(:hover) {
+    opacity: 0.15; filter: blur(2px); pointer-events: none;
+  }
+}
+/* Fallback */
+@supports not (selector(:has(*))) {
+  .cards:hover .card { opacity: .15; }
+  .cards .card:hover { opacity: 1; }
+}
+
+/* Card activa */
+.cards .card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 30px 80px rgba(0,0,0,.55);
+}
+.cards .card:hover::after { opacity: 1; }
+.cards .card:hover .card__media img { transform: scale(1.08); }
+
+/* Dirección de crecimiento por esquina */
+.cards .card:nth-child(1):hover { transform-origin: top left; }
+.cards .card:nth-child(2):hover { transform-origin: top right; }
+.cards .card:nth-child(3):hover { transform-origin: bottom left; }
+.cards .card:nth-child(4):hover { transform-origin: bottom right; }
+
+/* Mostrar extra con animación */
+.cards .card:hover .card__extra,
+.cards .card:hover .chips,
+.cards .card:hover .cta-row {
+  opacity: 1;
+  max-height: 500px; /* suficiente para el contenido */
+}
+
+/* ========================================
+   Timeline
+======================================== */
+.timeline {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 18px
+}
+
+.step {
+  background: #0f1114;
+  border: 1px solid #20242b;
+  border-radius: 16px;
+  padding: 18px;
+}
+
+.step__num {
+  display: inline-grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  color: #0a0c0d;
+  font-weight: 800;
+  margin-bottom: 8px;
+}
+
+/* ========================================
+   Gallery
+======================================== */
+.gallery {
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.gallery img {
+  width: 100%;
+  height: 240px;
+  object-fit: cover;
+  border-radius: 14px;
+  border: 1px solid #20242b;
+}
+
+/* ========================================
+   Testimonials
+======================================== */
+.testimonials {
+  grid-template-columns: repeat(3, 1fr)
+}
+
+.quote {
+  background: #0f1114;
+  border: 1px solid #20242b;
+  border-radius: 16px;
+  padding: 18px;
+  font-style: italic;
+}
+
+.quote cite {
+  display: block;
+  margin-top: 10px;
+  color: #9aa3ad;
+  font-style: normal;
+}
+
+/* ========================================
+   CTA
+======================================== */
+.cta {
+  padding: 68px 0;
+  background: radial-gradient(1200px 400px at 50% 0, rgba(45, 212, 191, .18), transparent 60%), var(--surface);
+  border-top: 1px solid #1f232a;
+}
+
+.cta__inner {
+  text-align: center
+}
+
+.cta h2 {
+  margin: 0 0 10px;
+  font-size: clamp(1.4rem, 2.2vw, 2rem)
+}
+
+.cta p {
+  color: #c9d1da;
+  margin: 0 0 18px
+}
+
+/* ========================================
+   Footer
+======================================== */
+.footer {
+  border-top: 1px solid #1f232a;
+  background: #0b0c0e
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 22px;
+  padding: 38px 0;
+}
+
+.list {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0
+}
+
+.list a {
+  color: #c9d1da;
+  text-decoration: none
+}
+
+.list a:hover {
+  color: var(--brand)
+}
+
+.footer__copy {
+  text-align: center;
+  color: #8e96a3;
+  border-top: 1px solid #1f232a;
+  padding: 16px 0;
+  font-size: .9rem;
+}
+
+/* ========================================
+   Responsive
+======================================== */
+@media (max-width:1024px) {
+  .cards {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .timeline {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .gallery {
+    grid-template-columns: repeat(2, 1fr)
+  }
+
+  .testimonials {
+    grid-template-columns: 1fr 1fr
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr 1fr
+  }
+}
+
+@media (max-width:640px) {
+  .menu {
+    display: none
+  }
+
+  .cards {
+    grid-template-columns: 1fr
+  }
+
+  .timeline {
+    grid-template-columns: 1fr
+  }
+
+  .gallery {
+    grid-template-columns: 1fr
+  }
+
+  .testimonials {
+    grid-template-columns: 1fr
+  }
+
+  .footer__grid {
+    grid-template-columns: 1fr
+  }
+}
