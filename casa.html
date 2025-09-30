@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8" />
+  <title>Visor 360</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      font-family: sans-serif;
+    }
+
+    /* Estilos generales de botones UI */
+    .ui-button {
+      position: absolute;
+      background: #00FFB2;
+
+      color: #111;
+      padding: 10px 18px;
+      font-weight: 600;
+      border: none;
+      border-radius: 9999px;
+      /* pill shape */
+      cursor: pointer;
+      z-index: 10;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+    }
+
+    .ui-button:hover {
+      background: linear-gradient(135deg, #00FFB2, #00cc88);
+      color: black;
+    }
+
+    .btn-regreso {
+      top: 20px;
+      left: 20px;
+    }
+
+    .btn-plano {
+      top: 20px;
+      right: 20px;
+    }
+
+    .btn-navegacion {
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    /* Botón de ocultar interfaz */
+    .btn-toggle-ui {
+      bottom: 20px;
+      left: 20px;
+    }
+
+    /* Plano fijo debajo del botón */
+    .plano-popup {
+      display: block;
+      /* 🔥 comienza visible */
+      position: absolute;
+      top: 70px;
+      right: 20px;
+      border: 2px solid #00FFB2;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.6);
+      backdrop-filter: blur(6px);
+      z-index: 20;
+      width: 320px;
+      height: auto;
+      box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5);
+      animation: fadeIn 0.3s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .plano-popup img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+
+    /* Botones dentro del plano */
+    .plano-btn {
+      position: absolute;
+      transform: translate(-50%, -50%);
+      background: #0a2b3c;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 5px 12px;
+      font-size: 13px;
+      font-weight: 600;
+      cursor: pointer;
+      z-index: 25;
+      transition: all 0.3s ease;
+    }
+
+    .plano-btn:hover {
+      background: #00FFB2;
+      color: black;
+      box-shadow: 0 0 12px #00FFB2;
+    }
+
+    /* Navegación tipo barra */
+    nav.ui-nav {
+      display: none;
+      position: absolute;
+      bottom: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 10px;
+      padding: 10px 20px;
+      z-index: 10;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    nav.ui-nav a {
+      margin: 0 10px;
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      transition: color 0.3s ease;
+    }
+
+    nav.ui-nav a:hover {
+      color: #00cc88;
+    }
+  </style>
+
+</head>
+
+<body>
+  <!-- Escena A-Frame -->
+  <a-scene>
+    <a-assets>
+      <img id="panorama" crossorigin="anonymous" />
+    </a-assets>
+    <a-sky id="sky" src="#panorama"></a-sky>
+  </a-scene>
+
+  <!-- Botones principales -->
+  <button id="btnRegresar" class="ui-button btn-regreso"
+    onclick="window.location.href='recorridos.html'">Regresar</button>
+  <button id="btnPlano" class="ui-button btn-plano" onclick="togglePlano()">Imagen plano</button>
+  <button id="btnNav" class="ui-button btn-navegacion" onclick="mostrarUI()">UI Navegación</button>
+  <button id="btnToggleUI" class="ui-button btn-toggle-ui" onclick="toggleUI()">Ocultar UI</button>
+
+  <!-- Plano con botones interactivos -->
+  <div id="planoContainer" class="plano-popup">
+    <img src="assets/planos/casa.png" alt="Plano de la casa" />
+
+    <!-- Botones colocados sobre el plano -->
+    <button class="plano-btn" style="top: 35%; left: 85%;" onclick="irA('sala')">Sala</button>
+    <button class="plano-btn" style="top: 18%; left: 40%;" onclick="irA('cocina')">Cocina</button>
+    <button class="plano-btn" style="top: 20%; left: 57%;" onclick="irA('bano')">Baño</button>
+    <button class="plano-btn" style="top: 35%; left: 54%;" onclick="irA('comedor')">Comedor</button>
+    <button class="plano-btn" style="top: 18%; left: 85%;" onclick="irA('recibidor')">Recibidor</button>
+    <button class="plano-btn" style="top: 38%; left: 14%;" onclick="irA('cochera')">Cochera</button>
+    <button class="plano-btn" style="top: 35%; left: 32%;" onclick="irA('lavado')">Lavado</button>
+    <button class="plano-btn" style="top: 84%; left: 30%;" onclick="irA('patio')">Patio</button>
+    <button class="plano-btn" style="top: 66%; left: 90%;" onclick="irA('patiodos')">Patio</button>
+    <button class="plano-btn" style="top: 26%; left: 62%;" onclick="irA('pasillo')">Pasillo</button>
+    <button class="plano-btn" style="top:12%; left: 62%;" onclick="irA('escalera')">Escalera</button>
+  </div>
+
+  <!-- Navegación -->
+  <nav id="uiNav" class="ui-nav">
+    <a href="casa.html?id=montana">Montaña</a>
+    <a href="casa.html?id=playa">Playa</a>
+    <a href="casa.html?id=bosque">Bosque</a>
+  </nav>
+
+  <!-- Script -->
+  <script>
+    // Obtener el parámetro 'id' de la URL
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id") || "recibidor";
+    const imagePath = `assets/fotos360/${id}.jpg`;
+
+    // Asignar imagen al panorama
+    document.getElementById("panorama").setAttribute("src", imagePath);
+
+    // Mostrar/ocultar plano
+    function togglePlano() {
+      const plano = document.getElementById("planoContainer");
+      plano.style.display = plano.style.display === "none" ? "block" : "none";
+    }
+
+    // Mostrar/ocultar navegación
+    function mostrarUI() {
+      const nav = document.getElementById("uiNav");
+
+      // ✅ Tomar en cuenta el estado computado
+      const isHidden = window.getComputedStyle(nav).display === "none";
+
+      if (isHidden) {
+        nav.style.display = "block";
+      } else {
+        nav.style.display = "none";
+      }
+    }
+
+    // Ocultar/mostrar botones de UI
+    function toggleUI() {
+      const btnRegresar = document.getElementById("btnRegresar");
+      const btnPlano = document.getElementById("btnPlano");
+      const btnNav = document.getElementById("btnNav");
+      const plano = document.getElementById("planoContainer");
+      const nav = document.getElementById("uiNav");
+      const toggleBtn = document.getElementById("btnToggleUI");
+
+      const isVisible = btnRegresar.style.display !== "none";
+
+      if (isVisible) {
+        btnRegresar.style.display = "none";
+        btnPlano.style.display = "none";
+        btnNav.style.display = "none";
+        plano.style.display = "none";
+        nav.style.display = "none";
+        toggleBtn.textContent = "Mostrar UI";
+      } else {
+        btnRegresar.style.display = "block";
+        btnPlano.style.display = "block";
+        btnNav.style.display = "block";
+        plano.style.display = "block"; // 🔥 también reaparece cuando activas todo
+        toggleBtn.textContent = "Ocultar UI";
+      }
+    }
+
+    // Función para cambiar de panorama
+    function irA(lugar) {
+      window.location.href = `casa.html?id=${lugar}`;
+    }
+  </script>
+</body>
+
+</html>
