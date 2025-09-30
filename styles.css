@@ -30,6 +30,41 @@ body {
 }
 
 /* ========================================
+   Preloader
+======================================== */
+/* Preloader pantalla completa */
+#preloader {
+  position: fixed;
+  inset: 0;
+  background: #0c0d0f; /* tu fondo */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  opacity: 1;
+  transition: opacity 1s ease;
+}
+
+/* Imagen con animación */
+#preloader img {
+  width: 120px;
+  opacity: 0;
+  animation: fadeIn 1.5s ease forwards;
+}
+
+@keyframes fadeIn {
+  to {
+    opacity: 1;
+  }
+}
+
+/* Cuando termina, ocultar */
+#preloader.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ========================================
    Utilities
 ======================================== */
 .container {
@@ -448,33 +483,303 @@ body {
   max-height: 500px; /* suficiente para el contenido */
 }
 
+/* Estado inicial: cards ocultas y desplazadas */
+.cards .card {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+/* Estado visible */
+.cards .card.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Pequeño retraso entre cada card para efecto cascada */
+.cards .card:nth-child(1) { transition-delay: 0.1s; }
+.cards .card:nth-child(2) { transition-delay: 0.25s; }
+.cards .card:nth-child(3) { transition-delay: 0.4s; }
+.cards .card:nth-child(4) { transition-delay: 0.55s; }
+
 /* ========================================
    Timeline
+======================================== */
+.section--alt {
+  background: linear-gradient(180deg, #14161a 0%, #0c0d0f 100%);
+  padding: 120px 0; /* más altura */
+}
+/* Estado inicial: oculto y desplazado */
+.section__title {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.9s ease; /* un poco más lento para que luzca */
+  margin-bottom: 48px;
+}
+
+/* Estado visible cuando entra en viewport */
+.section__title.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Solo para el título del proceso */
+.section__title.centered {
+  text-align: center;
+  font-size: clamp(2rem, 2.6vw, 2.4rem);
+}
+
+/* ========================================
+   Timeline - Nuestro proceso
 ======================================== */
 .timeline {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: 18px
+  gap: 40px;
+  position: relative;
+  margin-top: 40px;
 }
 
+/* Línea central (desktop) */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: 30px;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: #20242b;
+  z-index: 0;
+}
+
+/* Cada paso */
 .step {
-  background: #0f1114;
-  border: 1px solid #20242b;
-  border-radius: 16px;
-  padding: 18px;
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  transition: transform .3s ease, color .3s ease;
+  
+  /* Animación inicial */
+  opacity: 0;
+  transform: translateY(40px);
 }
 
+/* Al entrar en viewport */
+.step.visible {
+  opacity: 1;
+  transform: translateY(0);
+  transition: all 0.8s ease;
+}
+
+/* Número */
 .step__num {
   display: inline-grid;
   place-items: center;
-  width: 34px;
-  height: 34px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
+  background: #0f1114;
+  border: 3px solid var(--brand);
+  color: var(--brand);
+  font-weight: 800;
+  margin-bottom: 14px;
+  transition: all .3s ease;
+}
+
+/* Hover efecto */
+.step:hover .step__num {
   background: linear-gradient(135deg, var(--brand), var(--brand-2));
   color: #0a0c0d;
-  font-weight: 800;
-  margin-bottom: 8px;
+  transform: scale(1.1);
 }
+
+.step h4 {
+  margin: 6px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.step p {
+  color: #b9c2cc;
+  font-size: 0.92rem;
+  line-height: 1.4;
+}
+
+/* Responsive - móvil: vertical */
+@media (max-width: 768px) {
+  .timeline {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+  .timeline::before {
+    left: 22px;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+    height: auto;
+  }
+  .step {
+    text-align: left;
+    padding-left: 60px;
+  }
+  .step__num {
+    margin: 0;
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+}
+
+/* ==============================
+   DIFERENCIADORES
+================================= */
+.diferenciadores {
+  background: var(--surface);
+  text-align: center;
+  padding: 100px 0;
+}
+
+.diff-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px;
+  margin-top: 50px;
+}
+
+.diff-item {
+  background: #0f1114;
+  border: 1px solid #20242b;
+  border-radius: 18px;
+  padding: 40px 24px;
+  box-shadow: var(--shadow);
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s ease;
+}
+
+.diff-item.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.diff-icon {
+  font-size: 2.5rem;
+  margin-bottom: 18px;
+  background: linear-gradient(135deg, var(--brand), var(--brand-2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.diff-item h3 {
+  margin: 0 0 12px;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.diff-item p {
+  color: #b9c2cc;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .diff-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ========================================
+   TESTIMONIOS
+======================================== */
+.testimonials-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.testimonial {
+  background: #0f1114;
+  border: 1px solid #20242b;
+  border-radius: 16px;
+  padding: 22px;
+  font-style: italic;
+  color: #e9edf3;
+  position: relative;
+  box-shadow: var(--shadow);
+  transition: transform .3s ease, box-shadow .3s ease;
+}
+
+.testimonial:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 50px rgba(0,0,0,.55);
+}
+
+.testimonial p {
+  margin: 0 0 14px;
+  line-height: 1.5;
+  font-size: 1rem;
+}
+
+.testimonial footer {
+  font-style: normal;
+  color: #b9c2cc;
+  font-size: .9rem;
+}
+
+/* Efecto de comillas decorativas */
+.testimonial::before {
+  content: "“";
+  font-size: 3rem;
+  color: var(--brand);
+  position: absolute;
+  top: -12px;
+  left: 12px;
+  opacity: 0.3;
+}
+
+/* Estado inicial: oculto y desplazado */
+.testimonial.anim {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.8s ease;
+}
+
+/* Visible al entrar en viewport */
+.testimonial.anim.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.testimonial.anim:nth-child(1) { transition-delay: 0.15s; }
+.testimonial.anim:nth-child(2) { transition-delay: 0.3s; }
+.testimonial.anim:nth-child(3) { transition-delay: 0.45s; }
+
+/* ========================================
+   Portafolio
+======================================== */
+/* Estado inicial de las imágenes */
+.gallery img {
+  opacity: 0;
+  transform: scale(0.9) translateY(40px);
+  transition: all 0.8s ease;
+  border-radius: 14px;
+}
+
+/* Estado visible */
+.gallery img.visible {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+/* Cascada */
+.gallery img:nth-child(1) { transition-delay: 0.1s; }
+.gallery img:nth-child(2) { transition-delay: 0.25s; }
+.gallery img:nth-child(3) { transition-delay: 0.4s; }
+.gallery img:nth-child(4) { transition-delay: 0.55s; }
+.gallery img:nth-child(5) { transition-delay: 0.7s; }
+.gallery img:nth-child(6) { transition-delay: 0.85s; }
 
 /* ========================================
    Gallery
@@ -492,49 +797,56 @@ body {
 }
 
 /* ========================================
-   Testimonials
-======================================== */
-.testimonials {
-  grid-template-columns: repeat(3, 1fr)
-}
-
-.quote {
-  background: #0f1114;
-  border: 1px solid #20242b;
-  border-radius: 16px;
-  padding: 18px;
-  font-style: italic;
-}
-
-.quote cite {
-  display: block;
-  margin-top: 10px;
-  color: #9aa3ad;
-  font-style: normal;
-}
-
-/* ========================================
    CTA
 ======================================== */
+/* CTA */
 .cta {
-  padding: 68px 0;
-  background: radial-gradient(1200px 400px at 50% 0, rgba(45, 212, 191, .18), transparent 60%), var(--surface);
+  padding: 100px 0;
+  background: radial-gradient(1200px 400px at 50% 0,
+              rgba(217,131,44,.18), transparent 60%),
+              var(--surface);
   border-top: 1px solid #1f232a;
+  text-align: center;
+  position: relative;
 }
 
 .cta__inner {
-  text-align: center
+  max-width: 700px;
+  margin: 0 auto;
 }
 
 .cta h2 {
-  margin: 0 0 10px;
-  font-size: clamp(1.4rem, 2.2vw, 2rem)
+  font-size: clamp(1.8rem, 2.8vw, 2.6rem);
+  margin-bottom: 18px;
+  font-weight: 800;
+  color: var(--text);
 }
 
 .cta p {
+  font-size: 1.1rem;
   color: #c9d1da;
-  margin: 0 0 18px
+  margin-bottom: 28px;
 }
+
+.cta__actions {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Animación CTA */
+.cta__inner.anim {
+  opacity: 0;
+  transform: translateY(50px);
+  transition: all 0.9s ease;
+}
+
+.cta__inner.anim.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
 
 /* ========================================
    Footer
@@ -572,6 +884,20 @@ body {
   border-top: 1px solid #1f232a;
   padding: 16px 0;
   font-size: .9rem;
+}
+
+/* Footer animación */
+.footer__grid, 
+.footer__copy {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: all 0.9s ease;
+}
+
+.footer__grid.visible, 
+.footer__copy.visible {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 /* ========================================
